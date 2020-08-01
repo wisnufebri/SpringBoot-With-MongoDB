@@ -14,6 +14,8 @@ public class ItemModel {
     private boolean terjual;
     private int berat;
 
+
+
     public ItemModel() {
     }
 

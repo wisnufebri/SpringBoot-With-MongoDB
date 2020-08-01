@@ -1,6 +1,5 @@
 package com.gresstenan.wisnu.models;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,14 +30,22 @@ public class User {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+    
+    private UserDetail userDetail;
 
-    public User() {
-    }
-
-    public User(String username, String email, String password) {
+    public User(String username, String email, UserDetail userDetail, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.userDetail = userDetail;
+    }
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public String getId() {
@@ -79,5 +86,15 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", userDetail=" + userDetail +
+                '}';
     }
 }

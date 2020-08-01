@@ -39,7 +39,7 @@ public class ItemController {
 //    }
 
     @PostMapping("/insert")
-    public ItemModel createUser(@RequestBody ItemModel item) {
+    public ItemModel createItem(@RequestBody ItemModel item) {
         ItemModel result = itemRepository.save(item);
         return result;
     }
