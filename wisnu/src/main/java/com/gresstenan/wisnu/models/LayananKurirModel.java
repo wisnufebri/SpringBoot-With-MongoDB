@@ -1,25 +1,31 @@
 package com.gresstenan.wisnu.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "layanankurir")
-public class LayananKurirModel{
-    
+public class LayananKurirModel {
+
     private String id;
     private String nama;
     private String harga;
     private String estimasi;
-    private KurirModel kurirModel;
+
+    @DBRef
+    private Set<KurirModel> kurir = new HashSet<>();
 
     public LayananKurirModel() {
     }
 
-    public KurirModel getKurirModel() {
-        return kurirModel;
+    public Set<KurirModel> getKurir() {
+        return kurir;
     }
 
-    public void setKurirModel(KurirModel kurirModel) {
-        this.kurirModel = kurirModel;
+    public void setKurir(Set<KurirModel> kurir) {
+        this.kurir = kurir;
     }
 
     public String getId() {
@@ -29,7 +35,6 @@ public class LayananKurirModel{
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getNama() {
         return nama;

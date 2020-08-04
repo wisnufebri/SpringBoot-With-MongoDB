@@ -1,5 +1,6 @@
 package com.gresstenan.wisnu.service;
 
+import com.gresstenan.wisnu.models.KurirModel;
 import com.gresstenan.wisnu.models.LayananKurirModel;
 import com.gresstenan.wisnu.repository.KurirRepository;
 import com.gresstenan.wisnu.repository.LayananKurirRepository;
@@ -10,8 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -35,7 +38,29 @@ public class LayananKurirService {
     }
 
     public void insertLayananKurir(LayananKurirModel layananKurirModel) {
+        layananKurirModel.getNama();
+        layananKurirModel.getHarga();
+        layananKurirModel.getEstimasi();
+
+        Set<KurirModel> kurirModels = layananKurirModel.getKurir();
+        Set<KurirModel> kurir = new HashSet<>();
+
+
         layananKurirRepository.save(layananKurirModel);
+    }
+    
+    public boolean deleteById(final String id) {
+        final Optional<LayananKurirModel> result = layananKurirRepository.findById(id);
+        if (result != null) {
+            try {
+                layananKurirRepository.deleteById(id);
+                return true;
+            } catch (final Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
 
