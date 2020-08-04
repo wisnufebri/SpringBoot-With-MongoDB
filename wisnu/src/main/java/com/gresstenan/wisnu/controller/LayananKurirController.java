@@ -1,11 +1,9 @@
 package com.gresstenan.wisnu.controller;
 
 import com.gresstenan.wisnu.models.LayananKurirModel;
-import com.gresstenan.wisnu.payload.response.MessageResponse;
 import com.gresstenan.wisnu.repository.LayananKurirRepository;
 import com.gresstenan.wisnu.service.LayananKurirService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
