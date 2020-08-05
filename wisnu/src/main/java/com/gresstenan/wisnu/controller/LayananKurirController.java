@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/layanan")
 public class LayananKurirController {
@@ -21,7 +22,7 @@ public class LayananKurirController {
     @Autowired
     LayananKurirService layananKurirService;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<LayananKurirModel> getAllLayanan(@RequestParam(value = "page", defaultValue = "0") Integer pageNo,
                                                  @RequestParam(value = "sortKey", defaultValue = "username") String sortKey) {
         return layananKurirService.getAllLayananKurir(pageNo, sortKey);

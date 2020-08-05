@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/item")
 public class ItemController {
@@ -38,13 +39,13 @@ public class ItemController {
 //        return item;
 //    }
 
-    @PostMapping("/insert")
+    @PostMapping
     public ItemModel createItem(@RequestBody ItemModel item) {
         ItemModel result = itemRepository.save(item);
         return result;
     }
 
-    @PutMapping("")
+    @PutMapping
     public Map<String, Object> updateUser(@RequestBody ItemModel item){
         return itemService.updateItem(item);
     }
