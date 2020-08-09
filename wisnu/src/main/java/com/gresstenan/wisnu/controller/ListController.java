@@ -1,6 +1,8 @@
 package com.gresstenan.wisnu.controller;
 
+import com.gresstenan.wisnu.models.ListItem;
 import com.gresstenan.wisnu.models.Tutorial;
+import com.gresstenan.wisnu.repository.ListRepository;
 import com.gresstenan.wisnu.repository.TutorialRepository;
 import com.gresstenan.wisnu.utility.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,11 @@ import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/tutorials")
-public class TutorialController {
+@RequestMapping("/api/list")
+public class ListController {
 
     @Autowired
-    TutorialRepository tutorialRepository;
+    ListRepository listRepository;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -36,23 +38,23 @@ public class TutorialController {
     ) {
 
         try {
-            List<Tutorial> tutorials = new ArrayList<Tutorial>();
+            List<ListItem> listItems = new ArrayList<ListItem>();
             Pageable paging = PageRequest.of(page, size);
 
-            Page<Tutorial> pageTuts;
+            Page<ListItem> pageTuts;
             if (title == null)
-                pageTuts = tutorialRepository.findAll(paging);
+                pageTuts = listRepository.findAll(paging);
             else
-                pageTuts = tutorialRepository.findByTitleContaining(title, paging);
+                pageTuts = listRepository.findByTitleContaining(title, paging);
 
-            tutorials = pageTuts.getContent();
+            listItems = pageTuts.getContent();
 
-            if (tutorials.isEmpty()) {
+            if (listItems.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             Map<String, Object> response = new HashMap<>();
-            response.put("tutorials", tutorials);
+            response.put("listItems", listItems);
             response.put("currentPage", pageTuts.getNumber());
             response.put("totalItems", pageTuts.getTotalElements());
             response.put("totalPages", pageTuts.getTotalPages());
@@ -63,24 +65,24 @@ public class TutorialController {
         }
     }
 
-    @GetMapping("/tutorials/published")
+    @GetMapping("/item/published")
     public ResponseEntity<Map<String, Object>> findByPublished(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size
     ) {
         try {
-            List<Tutorial> tutorials = new ArrayList<Tutorial>();
+            List<ListItem> listItems = new ArrayList<ListItem>();
             Pageable paging = PageRequest.of(page, size);
 
-            Page<Tutorial> pageTuts = tutorialRepository.findByPublished(true, paging);
-            tutorials = pageTuts.getContent();
+            Page<ListItem> pageTuts = listRepository.findByPublished(true, paging);
+            listItems = pageTuts.getContent();
 
-            if (tutorials.isEmpty()) {
+            if (listItems.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             Map<String, Object> response = new HashMap<>();
-            response.put("tutorials", tutorials);
+            response.put("listItem", listItems);
             response.put("currentPage", pageTuts.getNumber());
             response.put("totalItems", pageTuts.getTotalElements());
             response.put("totalPages", pageTuts.getTotalPages());
@@ -91,22 +93,27 @@ public class TutorialController {
         }
     }
 
-    @GetMapping("/tutorials/{id}")
-    public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") String id) {
-        Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
+    @GetMapping("/item/{id}")
+    public ResponseEntity<ListItem> getItemById(@PathVariable("id") String id) {
+        Optional<ListItem> listItem = listRepository.findById(id);
 
-        if (tutorialData.isPresent()) {
-            return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
+        if (listItem.isPresent()) {
+            return new ResponseEntity<>(listItem.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Tutorial> createTutorial(@RequestBody Tutorial tutorial) {
+    public ResponseEntity<ListItem> createItem(@RequestBody ListItem listItem) {
         try {
-            Tutorial _tutorial = tutorialRepository.save(new Tutorial(tutorial.getTitle(),
-                    tutorial.getDescription(), true));
+            ListItem _listItem = listRepository.save(new Tutorial(listItem.getNama(),
+                    listItem.getDescription(),
+                    listItem.getHarga(),
+                    listItem.getBerat(),
+                    listItem.getStok(),
+                    listItem.isPublished();
+                    true));
             return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -30,13 +30,6 @@ public class ItemService {
     public Optional<ItemModel> getItemById(final String id){
         return itemRepository.findById(id);
     }
-
-	public List<ItemModel> getAllItem(final Integer pageNo, final String sortKey) {
-        final int noOfRecord = 5;
-        final Pageable page = PageRequest.of(pageNo, noOfRecord, Sort.by(sortKey));
-        final Page<ItemModel> pageResult = itemRepository.findAll(page);
-        return pageResult.getContent();
-    }
     
     public void insertItem(final ItemModel item){
         System.out.println();

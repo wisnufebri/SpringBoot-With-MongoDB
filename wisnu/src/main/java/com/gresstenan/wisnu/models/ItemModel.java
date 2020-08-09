@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ItemModel {
     @Id
     private String id;
+    
     private String nama;
     private int stock;
     private int harga;
@@ -17,6 +18,15 @@ public class ItemModel {
 
 
     public ItemModel() {
+    }
+
+    public ItemModel(String nama, int stock, int harga, String description, boolean terjual, int berat) {
+        this.nama = nama;
+        this.stock = stock;
+        this.harga = harga;
+        this.description = description;
+        this.terjual = terjual;
+        this.berat = berat;
     }
 
     public String getId() {

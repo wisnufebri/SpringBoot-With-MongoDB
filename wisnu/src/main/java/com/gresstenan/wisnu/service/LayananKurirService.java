@@ -26,9 +26,16 @@ public class LayananKurirService {
     @Autowired
     KurirRepository kurirRepository;
 
+    @Autowired
+    KurirService kurirService;
+
     public Optional<LayananKurirModel> getLayananById(final String id) {
+        LayananKurirModel layananKurirModel = layananKurirRepository.findById(id).get();
+//        KurirModel kurirModel = kurirService.getKurirById(layananKurirModel.getKurirId());
+
         return layananKurirRepository.findById(id);
     }
+
 
     public List<LayananKurirModel> getAllLayananKurir(final Integer pageNo, final String sortKey) {
         final int noOfRecord = 5;
